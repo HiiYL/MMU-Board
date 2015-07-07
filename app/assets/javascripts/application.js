@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require turbolinks
 
-$(document).ready(function(){
+$(document).on('ready page:load', function(){
   $('.parallax').parallax();
   $(".button-collapse").sideNav();
 });

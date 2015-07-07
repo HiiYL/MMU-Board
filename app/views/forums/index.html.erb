@@ -1,0 +1,28 @@
+<div class="container">
+<p id="notice"><%= notice %></p>
+
+<h3>Forums</h3>
+<div class="row">
+  <% @forums.each do |forum| %>
+  <div class="col s4">
+    <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <%= image_tag "placeholder-user.png" %>
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4"><%= forum.name %></i></span>
+          <p><%= link_to 'View', forum %></p>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Card Titleclose</i></span>
+          <p><%= forum.description %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<br>
+
+<%= link_to 'New Forum', new_forum_path, class: "waves-effect waves-teal btn-flat" %>
+</div>
