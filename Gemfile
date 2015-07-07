@@ -17,6 +17,8 @@ gem 'materialize-sass'
 gem 'devise'
 
 gem 'pg'
+
+gem 'gravtastic'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :forums
   resources :posts
-  devise_for :users
+  devise_for :users, controllers: {
+        sessions: 'users/sessions'
+      }
   root to: 'static_pages#home'
 
   # The priority is based upon order of creation: first created -> highest priority.

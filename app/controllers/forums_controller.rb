@@ -1,5 +1,6 @@
 class ForumsController < ApplicationController
   before_action :set_forum, only: [:show, :edit, :update, :destroy]
+  before_action :authenticated, only: [:show, :edit, :update, :destroy]
 
   # GET /forums
   # GET /forums.json
@@ -26,6 +27,7 @@ class ForumsController < ApplicationController
   # POST /forums.json
   def create
     @forum = Forum.new(forum_params)
+    @forum.users << current_user
 
     respond_to do |format|
       if @forum.save
@@ -68,8 +70,20 @@ class ForumsController < ApplicationController
       @forum = Forum.find(params[:id])
     end
 
+    def authenticated
+      unless @forum.has_access(current_user)
+        redirect_to root_path
+      end
+
+      # unless(@forum.is_private)
+      #   return @forum.users.find(current_user.id)
+      # end
+      # return true
+
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def forum_params
-      params.require(:forum).permit(:name, :description, :forum_id)
+      params.require(:forum).permit(:name, :description, :forum_id, :is_private)
     end
 end

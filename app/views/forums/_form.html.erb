@@ -19,6 +19,10 @@
     <%= f.label :description %><br>
     <%= f.text_area :description, class: "materialize-textarea" %>
   </div>
+  <div class="field">
+    <%= f.check_box :is_private %>
+    <%= f.label :is_private %>
+  </div>
   <div class="actions">
     <button class="btn waves-effect waves-light" type="submit" name="action">Submit
       <i class="material-icons">send</i>

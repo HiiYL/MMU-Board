@@ -11,11 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707015426) do
+ActiveRecord::Schema.define(version: 20150707064350) do
+
+  create_table "forum_users", force: :cascade do |t|
+    t.integer "forum_id"
+    t.integer "user_id"
+  end
+
+  add_index "forum_users", ["forum_id"], name: "index_forum_users_on_forum_id"
+  add_index "forum_users", ["user_id"], name: "index_forum_users_on_user_id"
 
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
+    t.boolean  "is_private"
     t.integer  "forum_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
