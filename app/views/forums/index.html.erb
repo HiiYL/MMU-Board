@@ -6,12 +6,12 @@
   <div class="section white">
     <div class="row container">
       <h2 class="header">General</h2>
-      <% @forums.each do |forum| %>
+      <% @forums.where("is_private = ?", false).each do |forum| %>
       <div class="col s12 m4">
         <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
+<!--             <div class="card-image waves-effect waves-block waves-light">
               <%= image_tag forum.users.first.gravatar_url %>
-            </div>
+            </div> -->
             <div class="card-content">
               <span class="card-title activator grey-text text-darken-4"><%= forum.name %></i></span>
               <p><%= link_to 'View', forum %></p>
@@ -28,29 +28,72 @@
   <div class="parallax-container">
     <div class="parallax"><%= image_tag "background2.jpg" %></div>
   </div>
+  <% if user_signed_in? %>
     <div class="section white">
-    <div class="row container">
-      <h2 class="header">Private</h2>
-      <% @forums.each do |forum| %>
-      <div class="col s12 m4">
-        <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-              <%= image_tag forum.users.first.gravatar_url %>
-            </div>
-            <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4"><%= forum.name %></i></span>
-              <p><%= link_to 'View', forum %></p>
-            </div>
-            <div class="card-reveal">
-              <span class="card-title grey-text text-darken-4">Card Titleclose</i></span>
-              <p><%= forum.description %></p>
+      <div class="row container">
+        <h2 class="header">Private</h2>
+        <% @forums.where("is_private = ?", true).each do |forum| %>
+        <div class="col s12 m4">
+          <div class="card">
+<!--               <div class="card-image waves-effect waves-block waves-light">
+                <%= image_tag forum.users.first.gravatar_url %>
+              </div> -->
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4"><%= forum.name %></i></span>
+                <p><%= link_to 'View', forum %></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Titleclose</i></span>
+                <p><%= forum.description %></p>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
+
 
 <br>
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1">
+<i class="material-icons">add</i>
+</a>
+</div>
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+        <%= form_for(@forum) do |f| %>
+  <% if @forum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@forum.errors.count, "error") %> prohibited this forum from being saved:</h2>
 
-<%= link_to 'New Forum', new_forum_path, class: "waves-effect waves-teal btn-flat" %>
+      <ul>
+      <% @forum.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field input-field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field input-field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, class: "materialize-textarea" %>
+  </div>
+  <div class="field">
+    <%= f.check_box :is_private %>
+    <%= f.label :is_private %>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit" name="action">Submit
+      <i class="material-icons">send</i>
+    </button>    
+  </div>
+<% end %>
+
+    </div>
+    </div>
+  </div>

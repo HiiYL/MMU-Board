@@ -6,6 +6,7 @@ class ForumsController < ApplicationController
   # GET /forums.json
   def index
     @forums = Forum.all
+    @forum = Forum.new
   end
 
   # GET /forums/1
@@ -26,8 +27,7 @@ class ForumsController < ApplicationController
   # POST /forums
   # POST /forums.json
   def create
-    @forum = Forum.new(forum_params)
-    @forum.users << current_user
+    @forum = current_user.forums.build(forum_params)
 
     respond_to do |format|
       if @forum.save
@@ -72,7 +72,8 @@ class ForumsController < ApplicationController
 
     def authenticated
       unless @forum.has_access(current_user)
-        redirect_to root_path
+        flash[:notice] = "You don't have access to this page!"
+        redirect_to forums_path
       end
 
       # unless(@forum.is_private)

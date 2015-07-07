@@ -18,4 +18,5 @@
 $(document).on('ready page:load', function(){
   $('.parallax').parallax();
   $(".button-collapse").sideNav();
+  $('.modal-trigger').leanModal();
 });

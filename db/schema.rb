@@ -24,10 +24,10 @@ ActiveRecord::Schema.define(version: 20150707064350) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_private"
+    t.boolean  "is_private",  default: false
     t.integer  "forum_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "forums", ["forum_id"], name: "index_forums_on_forum_id"

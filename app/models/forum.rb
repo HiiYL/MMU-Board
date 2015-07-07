@@ -6,11 +6,13 @@ class Forum < ActiveRecord::Base
   has_many :posts
 
   def has_access(user)
-
-  	if self.is_private
-  		return self.users.find_by_id(user.id)
-  	else
-  		return false
-  	end
+    if self.is_private
+      if user.nil?
+        return false
+      end
+      return !self.users.find_by_id(user.id).nil?
+    else
+      return true
+    end
   end
 end
